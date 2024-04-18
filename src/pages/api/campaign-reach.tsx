@@ -1,21 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export type ResponseData = {
-  name: string,
-  age: number
+  reach: number
 } | {
   error: string
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  if (!req.query.name || typeof req.query.name !== 'string') {
+  if (!req.query.minAge) {
     return res.status(400).json({
-      error: 'name must be a string'
+      error: 'minAge must be provided'
+    })
+  }
+
+  if (!req.query.maxAge) {
+    return res.status(400).json({
+      error: 'maxAge must be provided'
     })
   }
 
   return res.status(200).json({
-    name: req.query.name,
-    age: Math.random()*100
+    reach: Math.random()*100
   })
 }
